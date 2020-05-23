@@ -1,0 +1,717 @@
+{
+	"info": {
+		"_postman_id": "3124fd41-d1ab-43f0-a28f-e7d754c61791",
+		"name": "Alpaca_PaperTrading",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "TradingStrategyAccumDist",
+			"item": [
+				{
+					"name": "OneTimeSetup",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "736ccc97-18bd-4918-ab1d-512077ab56e2",
+								"exec": [
+									"//Set the value for variable :dynamic_url",
+									"let lib = eval(pm.variables.get(\"collection_lib\"))",
+									"lib.set_dynamic_url()",
+									"",
+									"//Set the value for variable :symbol",
+									"lib.set_symbol()",
+									"",
+									"//Set threshold",
+									"var threshold = lib.get_threshold()",
+									"",
+									"//Print debug info",
+									"lib.print_debug_info()"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "8b890398-1a9e-46e6-9621-f38c0581c256",
+								"exec": [
+									"//Inject a failure by setting the env variable \"inject_failure_flag\" to true",
+									"pm.test(\"Environment variable 'inject_failure_flag' should be set to false\", function() {",
+									"    pm.expect(pm.environment.get(\"inject_failure_flag\")).to.eql(\"false\")",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://postman-echo.com/status/200",
+							"protocol": "https",
+							"host": [
+								"postman-echo",
+								"com"
+							],
+							"path": [
+								"status",
+								"200"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OneTimeSetup",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://postman-echo.com/status/200",
+									"protocol": "https",
+									"host": [
+										"postman-echo",
+										"com"
+									],
+									"path": [
+										"status",
+										"200"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 21 May 2020 23:05:05 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "14"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"e-QlsUp1vTYvBgYHrHCBYe2n/q268\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Last Quote",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "c2bc7be4-ef23-4761-8d98-7fe049db2fed",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "f1f66c04-ef6c-4239-ba64-c1f33fbd22df",
+								"exec": [
+									"//Tests specific to this particular request.",
+									"pm.test('\"symbol\" field in the response should be \"' + pm.variables.get(\"symbol\") + '\"', function () {",
+									"    var jsonData = pm.response.json()",
+									"    pm.expect(jsonData.symbol).to.eql(pm.variables.get(\"symbol\"))",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "APCA-API-KEY-ID",
+								"type": "text",
+								"value": "{{API_KEY_{{ENV}}}}"
+							},
+							{
+								"key": "APCA-API-SECRET-KEY",
+								"type": "text",
+								"value": "{{Secret_Key_{{ENV}}}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{dynamic_url}}/v1/last_quote/stocks/:symbol",
+							"host": [
+								"{{dynamic_url}}"
+							],
+							"path": [
+								"v1",
+								"last_quote",
+								"stocks",
+								":symbol"
+							],
+							"variable": [
+								{
+									"key": "symbol",
+									"value": "{{symbol}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Last Quote",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "APCA-API-KEY-ID",
+										"type": "text",
+										"value": "{{API_KEY_{{ENV}}}}"
+									},
+									{
+										"key": "APCA-API-SECRET-KEY",
+										"type": "text",
+										"value": "{{Secret_Key_{{ENV}}}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{dynamic_url}}/v1/last_quote/stocks/:symbol",
+									"host": [
+										"{{dynamic_url}}"
+									],
+									"path": [
+										"v1",
+										"last_quote",
+										"stocks",
+										":symbol"
+									],
+									"variable": [
+										{
+											"key": "symbol",
+											"value": "{{symbol}}"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Get Bars",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ec4e6d50-06a2-415d-a491-468428c5529c",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "75a592ca-5cc1-4d72-8de8-0087f564fe0d",
+								"exec": [
+									"//Specific_Tests",
+									"var jsonData = pm.response.json()",
+									"var symbol = pm.variables.get(\"symbol\")",
+									"var open_price = parseFloat(jsonData[symbol][0].o)",
+									"var close_price = parseFloat(jsonData[symbol][0].c)",
+									"var price_diff = close_price - open_price",
+									"",
+									"console.log('Open: Close: Diff:', open_price, close_price, price_diff)",
+									"if (price_diff < 0) {",
+									"    console.log(\"Price is down by $\" + price_diff + \", let's buy more of \" + symbol)",
+									"    postman.setNextRequest(\"Buy More\")",
+									"} else {",
+									"    console.log(\"Price is up by $\" + price_diff + \", let's sell some of \" + symbol)",
+									"    postman.setNextRequest(\"Sell Some\")",
+									"}",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "APCA-API-KEY-ID",
+								"value": "{{API_KEY_{{ENV}}}}",
+								"type": "text"
+							},
+							{
+								"key": "APCA-API-SECRET-KEY",
+								"value": "{{Secret_Key_{{ENV}}}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{dynamic_url}}/v1/bars/1D?symbols={{symbol}}&limit=1",
+							"host": [
+								"{{dynamic_url}}"
+							],
+							"path": [
+								"v1",
+								"bars",
+								"1D"
+							],
+							"query": [
+								{
+									"key": "symbols",
+									"value": "{{symbol}}"
+								},
+								{
+									"key": "limit",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Bars",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "APCA-API-KEY-ID",
+										"value": "{{API_KEY_{{ENV}}}}",
+										"type": "text"
+									},
+									{
+										"key": "APCA-API-SECRET-KEY",
+										"value": "{{Secret_Key_{{ENV}}}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{dynamic_url}}/v1/bars/1D?symbols={{symbol}}&limit=1",
+									"host": [
+										"{{dynamic_url}}"
+									],
+									"path": [
+										"v1",
+										"bars",
+										"1D"
+									],
+									"query": [
+										{
+											"key": "symbols",
+											"value": "{{symbol}}"
+										},
+										{
+											"key": "limit",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.16.1"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 21 May 2020 17:37:51 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "75"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"CE\": [\n        {\n            \"t\": 1590033600,\n            \"o\": 85.6,\n            \"h\": 86.73,\n            \"l\": 84.12,\n            \"c\": 85.93,\n            \"v\": 363423\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Buy More",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "9f95375c-1079-46f4-94af-d6bbc4ac1634",
+								"exec": [
+									"console.log(\"Buy More was just called for \" + pm.variables.get(\"symbol\"))"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "4cf456c3-ef43-4ee3-b405-c3bcf3f470d0",
+								"exec": [
+									"postman.setNextRequest(\"EOT\")"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://postman-echo.com/status/200",
+							"protocol": "https",
+							"host": [
+								"postman-echo",
+								"com"
+							],
+							"path": [
+								"status",
+								"200"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Buy More",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://postman-echo.com/status/200",
+									"protocol": "https",
+									"host": [
+										"postman-echo",
+										"com"
+									],
+									"path": [
+										"status",
+										"200"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 21 May 2020 17:38:09 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "14"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"e-QlsUp1vTYvBgYHrHCBYe2n/q268\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200\n}"
+						}
+					]
+				},
+				{
+					"name": "Sell Some",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1ee41794-010c-4dcc-9684-9a62e6ce175e",
+								"exec": [
+									"console.log(\"Sell Some was just called for \" + pm.variables.get(\"symbol\"))"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "54717f6d-96e9-4142-874a-110a445476bc",
+								"exec": [
+									"postman.setNextRequest(\"EOT\")"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://postman-echo.com/status/200",
+							"protocol": "https",
+							"host": [
+								"postman-echo",
+								"com"
+							],
+							"path": [
+								"status",
+								"200"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sell Some",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://postman-echo.com/status/200",
+									"protocol": "https",
+									"host": [
+										"postman-echo",
+										"com"
+									],
+									"path": [
+										"status",
+										"200"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 21 May 2020 17:38:15 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "14"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"e-QlsUp1vTYvBgYHrHCBYe2n/q268\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200\n}"
+						}
+					]
+				},
+				{
+					"name": "EOT",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "46660d2a-fd29-4f4e-9bc4-5a255fdabd51",
+								"exec": [
+									"console.log(\"End of Test was called.\")"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://postman-echo.com/status/200",
+							"protocol": "https",
+							"host": [
+								"postman-echo",
+								"com"
+							],
+							"path": [
+								"status",
+								"200"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "EOT",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://postman-echo.com/status/200",
+									"protocol": "https",
+									"host": [
+										"postman-echo",
+										"com"
+									],
+									"path": [
+										"status",
+										"200"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 21 May 2020 17:38:26 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "14"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"e-QlsUp1vTYvBgYHrHCBYe2n/q268\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200\n}"
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b9eda058-1b6f-43e2-b45c-a4168244237c",
+						"type": "text/javascript",
+						"exec": [
+							"//Set the value for variable :dynamic_url",
+							"let lib = eval(pm.variables.get(\"collection_lib\"))",
+							"lib.set_dynamic_url()"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "fea9aec2-14e0-4833-a50a-db6cd4827f7e",
+						"type": "text/javascript",
+						"exec": [
+							"var env = pm.environment.get(\"ENV\")",
+							"var threshold = parseInt(pm.environment.get(\"Threshold_for_\" + env))",
+							"",
+							"//Common_Tests to run after every request in this folder.",
+							"pm.test(\"HTTP Status code should be 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time should be less than \" + threshold + \"ms\", function () {",
+							"    console.log(\"Verifying that the actual response time (\" + pm.response.responseTime + \" ms) is less than \" + threshold + \" ms\")",
+							"    pm.expect(pm.response.responseTime).to.be.below(threshold);",
+							"});"
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "453fed00-24a7-41ac-97a8-fa00cdf832cf",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "1c815585-4921-4e71-82a9-aa13a174e0cb",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "c5b448a7-4d6d-4c03-ae46-c835df14f90f",
+			"key": "collection_lib",
+			"value": "({\n    reset_global_vars:function() {\n      var var_names = JSON.parse(pm.environment.get(\"all_vars\"))\n      global_vars = var_names[\"all_global_vars\"]\n      for(var i=0; i<global_vars.length; i++){\n        (pm.environment.get(\"debug_flag\") && console.log('DEBUG: resetting global var:'+global_vars[i]))\n        pm.globals.unset(global_vars[i])\n      }\n    },\n    get_random_string:function() {\n      var random_string = pm.variables.replaceIn('{{$randomInt}}_{{$timestamp}}')\n      return random_string;\n    },\n    set_dynamic_url:function() {\n      var url_var_name = \"Market_Data_URL_\" + pm.environment.get(\"ENV\")\n      pm.variables.set(\"dynamic_url\", pm.environment.get(url_var_name))\n    },\n    set_symbol:function() {\n      var symbols = [\"AAPL\", \"CE\", \"CXP\", \"UNVR\", \"OKTA\", \"WFC\", \"JPM\", \"BAC\", \"LVS\", \"MRNA\", \"AZN\", \"BA\", \"XTNT\"]\n      pm.variables.set(\"symbol\", _.sample(symbols))\n    }, \n    get_threshold:function() {\n      return parseInt(pm.environment.get(\"Threshold_for_\" + pm.environment.get(\"ENV\")))\n    },\n    print_debug_info:function() {\n      console.log(\"ENV is set to \" + pm.environment.get(\"ENV\"))\n      console.log(\"Threshold variable Threshold_for_\" + pm.environment.get(\"ENV\") + \" is set to \" + parseInt(pm.environment.get(\"Threshold_for_\" + pm.environment.get(\"ENV\"))))\n      console.log(\"Stock Ticker is \" + pm.variables.get(\"symbol\"))\n    }\n})",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
